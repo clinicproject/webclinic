@@ -35,6 +35,9 @@ public class SessionBean implements SessionBeanRemote {
         em.merge(p);
 
     }
+    
+    
+    
 
     @Override
     public Boolean Login(String username, String password) {
