@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application version="6" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd">
+  <display-name>clinic</display-name>
+  <module>
+    <web>
+      <web-uri>clinic-war.war</web-uri>
+      <context-root>/clinic-war</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>clinic-ejb.jar</ejb>
+  </module>
+</application>
