@@ -161,3 +161,6 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+/clinic/nbproject/private/
+/clinic/clinic-war/nbproject/private/
+/clinic/clinic-ejb/nbproject/private/
