@@ -19,5 +19,11 @@
             
             
         </form>
+        <form method ="POST" action="doctors.jsp">
+
+            <input type ="Submit" name="Doctors" value="Doctors">
+            
+            
+        </form>
     </body>
 </html>

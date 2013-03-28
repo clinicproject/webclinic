@@ -5,24 +5,25 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ben
+ * @author Julia
  */
 @Entity
 @Table(name = "Idoctor")
@@ -34,7 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Idoctor.findByPassword", query = "SELECT i FROM Idoctor i WHERE i.password = :password"),
     @NamedQuery(name = "Idoctor.findByFName", query = "SELECT i FROM Idoctor i WHERE i.fName = :fName"),
     @NamedQuery(name = "Idoctor.findByLName", query = "SELECT i FROM Idoctor i WHERE i.lName = :lName"),
-    @NamedQuery(name = "Idoctor.findBySpecialty", query = "SELECT i FROM Idoctor i WHERE i.specialty = :specialty")})
+    @NamedQuery(name = "Idoctor.findBySpecialty", query = "SELECT i FROM Idoctor i WHERE i.specialty = :specialty"),
+    @NamedQuery(name = "Idoctor.findByHeadDoctor", query = "SELECT i FROM Idoctor i WHERE i.headDoctor = :headDoctor")})
+@Inheritance(strategy= InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="headDoctor", discriminatorType= DiscriminatorType.STRING, length=1)
+@DiscriminatorValue(value="D")
 public class Idoctor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,10 +70,11 @@ public class Idoctor implements Serializable {
     @Size(min = 1, max = 80)
     @Column(name = "specialty")
     private String specialty;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
-    private Collection<Iappointment> iappointmentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "doctorID")
-    private Collection<Idate> idateCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1)
+    @Column(name = "headDoctor")
+    private String headDoctor;
 
     public Idoctor() {
     }
@@ -76,14 +82,22 @@ public class Idoctor implements Serializable {
     public Idoctor(Integer doctorID) {
         this.doctorID = doctorID;
     }
-
-    public Idoctor(Integer doctorID, String emailID, String password, String lName, String specialty) {
-        this.doctorID = doctorID;
-        this.emailID = emailID;
-        this.password = password;
-        this.lName = lName;
-        this.specialty = specialty;
+    public Idoctor(String emailid, String password, String fname, String lname, String specialty) {
+        setEmailID(emailid);
+        setPassword(password);
+        setFName(fname);
+        setLName(lname);
+        setSpecialty(specialty);
+        this.setHeadDoctor("D");
     }
+//    public Idoctor(Integer doctorID, String emailID, String password, String lName, String specialty, String headDoctor) {
+//        this.doctorID = doctorID;
+//        this.emailID = emailID;
+//        this.password = password;
+//        this.lName = lName;
+//        this.specialty = specialty;
+//        this.headDoctor = headDoctor;
+//    }
 
     public Integer getDoctorID() {
         return doctorID;
@@ -133,22 +147,12 @@ public class Idoctor implements Serializable {
         this.specialty = specialty;
     }
 
-    @XmlTransient
-    public Collection<Iappointment> getIappointmentCollection() {
-        return iappointmentCollection;
+    public String getHeadDoctor() {
+        return headDoctor;
     }
 
-    public void setIappointmentCollection(Collection<Iappointment> iappointmentCollection) {
-        this.iappointmentCollection = iappointmentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Idate> getIdateCollection() {
-        return idateCollection;
-    }
-
-    public void setIdateCollection(Collection<Idate> idateCollection) {
-        this.idateCollection = idateCollection;
+    public void setHeadDoctor(String headDoctor) {
+        this.headDoctor = headDoctor;
     }
 
     @Override
@@ -176,4 +180,7 @@ public class Idoctor implements Serializable {
         return "entity.Idoctor[ doctorID=" + doctorID + " ]";
     }
     
+    public String showTypeofDoctor(){
+        return "Doctor";
+    }
 }
