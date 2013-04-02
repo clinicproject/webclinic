@@ -4,7 +4,9 @@
  */
 package session;
 
+import entity.Idate;
 import entity.Idoctor;
+import entity.Ipatient;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -84,5 +86,48 @@ public class DoctorSessionBean implements DoctorSessionBeanRemote{
             return null;
         }
     }
+    
+     @Override
+     public List<Idoctor> getDoctorsBySpeciality(String speciality)
+    {
+        try{
+
+        Query query = em.createNamedQuery("Idoctor.findBySpecialty").setParameter("speciality", speciality);
+        return (List<Idoctor>) query.getResultList();
+        }catch(Exception ex){
+            System.out.println("getDoctorBySpeciality" + ex.getMessage());
+            return null;
+        }
+    }
+    
+        @Override
+    public Boolean Login(String emailID, String password) {
+        Query q = em.createNamedQuery("Idoctor.findByLogin").setParameter("password", password).setParameter("emailID", emailID);
+        List<Idoctor> p = q.getResultList();
+        if (p.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+        
+        //find all dates book by the patient //Sinan
+        @Override
+     public List<Idate> getDatesByDateID(int dateid) {
+        Query q = (Query)em.createNamedQuery("Idate.findByDateID");
+         q.setParameter("dateID",dateid);
+      List<Idate> obj = q.getResultList();
+        return obj;
+    }
+        
+              //doctor's operation  //Sinan
+      //A doctor searching for a patient by last name using option LIKE to return list of patient objects
+    @Override
+      public List<Ipatient> getPatientBySearchText(String searchText) {
+        Query q = (Query)em.createNamedQuery("Ipatient.findBySearch");
+         q.setParameter("LName",searchText);
+        return q.getResultList();
+       }
 
 }

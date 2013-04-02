@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Idoctor.findByPassword", query = "SELECT i FROM Idoctor i WHERE i.password = :password"),
     @NamedQuery(name = "Idoctor.findByFName", query = "SELECT i FROM Idoctor i WHERE i.fName = :fName"),
     @NamedQuery(name = "Idoctor.findByLName", query = "SELECT i FROM Idoctor i WHERE i.lName = :lName"),
-    @NamedQuery(name = "Idoctor.findBySpecialty", query = "SELECT i FROM Idoctor i WHERE i.specialty = :specialty"),
+    @NamedQuery(name = "Idoctor.findBySpeciality", query = "SELECT i FROM Idoctor i WHERE i.speciality = :speciality"),
+    @NamedQuery(name = "Idoctor.findByLogin", query = "SELECT i FROM Idoctor i WHERE i.password = :password AND i.emailID = :emailID"),
     @NamedQuery(name = "Idoctor.findByHeadDoctor", query = "SELECT i FROM Idoctor i WHERE i.headDoctor = :headDoctor")})
 @Inheritance(strategy= InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="headDoctor", discriminatorType= DiscriminatorType.STRING, length=1)
@@ -68,8 +69,8 @@ public class Idoctor implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 80)
-    @Column(name = "specialty")
-    private String specialty;
+    @Column(name = "speciality")
+    private String speciality;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
@@ -82,20 +83,20 @@ public class Idoctor implements Serializable {
     public Idoctor(Integer doctorID) {
         this.doctorID = doctorID;
     }
-    public Idoctor(String emailid, String password, String fname, String lname, String specialty) {
+    public Idoctor(String emailid, String password, String fname, String lname, String speciality) {
         setEmailID(emailid);
         setPassword(password);
         setFName(fname);
         setLName(lname);
-        setSpecialty(specialty);
+        setSpeciality(speciality);
         this.setHeadDoctor("D");
     }
-//    public Idoctor(Integer doctorID, String emailID, String password, String lName, String specialty, String headDoctor) {
+//    public Idoctor(Integer doctorID, String emailID, String password, String lName, String speciality, String headDoctor) {
 //        this.doctorID = doctorID;
 //        this.emailID = emailID;
 //        this.password = password;
 //        this.lName = lName;
-//        this.specialty = specialty;
+//        this.speciality = speciality;
 //        this.headDoctor = headDoctor;
 //    }
 
@@ -139,12 +140,12 @@ public class Idoctor implements Serializable {
         this.lName = lName;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setSpeciality(String specialty) {
+        this.speciality = specialty;
     }
 
     public String getHeadDoctor() {

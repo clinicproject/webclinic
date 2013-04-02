@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ipatient.findByNote", query = "SELECT i FROM Ipatient i WHERE i.note = :note"),
     @NamedQuery(name = "Ipatient.findByEmailID", query = "SELECT i FROM Ipatient i WHERE i.emailID = :emailID"),
     @NamedQuery(name = "Ipatient.findByPassword", query = "SELECT i FROM Ipatient i WHERE i.password = :password"),
-    @NamedQuery(name = "Ipatient.findByLogin", query = "SELECT i FROM Ipatient i WHERE i.password = :password AND i.fName = :fName")})
+    @NamedQuery(name = "Ipatient.findByLogin", query = "SELECT i FROM Ipatient i WHERE i.password = :password AND i.fName = :fName"),
+    @NamedQuery(name = "Ipatient.findBySearch", query = "SELECT i FROM Ipatient i WHERE i.lName LIKE :lName")})
 public class Ipatient implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

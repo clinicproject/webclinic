@@ -21,8 +21,8 @@ public class Iheaddoctor extends Idoctor  {
             public Iheaddoctor() {
     }
     
-    public Iheaddoctor(String _emailid, String _password, String _fname, String _lname, String _specialty) {
-     super(_emailid, _password, _fname, _lname, _specialty);
+    public Iheaddoctor(String _emailid, String _password, String _fname, String _lname, String _speciality) {
+     super(_emailid, _password, _fname, _lname, _speciality);
      this.setHeadDoctor("H");
     }   
     
